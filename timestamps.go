@@ -1,47 +1,25 @@
 package timestamps
 
-import (
-	"time"
+import "time"
 
-	"github.com/the-control-group/watchdog-api/util"
-)
-
-type Timestamps struct {
+// Timestamp holds the created and updated fields of a timestamp
+type Timestamp struct {
 	Updated *time.Time `json:"updated" gorethink:"updated,omitempty"`
 	Created *time.Time `json:"created" gorethink:"created,omitempty"`
 }
 
-func (ts *Timestamps) MarkCreated(t *time.Time) {
-	if t == nil {
-		t = util.Now()
+// Mark takes a variadic list of Options and applies them to the timestamp
+func (ts *Timestamp) Mark(opts ...Option) {
+	if len(opts) == 0 {
+		t := Now()
+
+		ts.Created = t
+		ts.Updated = t
+
+		return
 	}
 
-	ts.Created = t
-	ts.Updated = t
-}
-
-/*
-	Passing a func() bool allows for more complicated logic
-	AND maintains reability.
-	Usage:
-	```
-		ts := new(Timestamps)
-		ts.MarkUpdated(nil, AndNilCreated)
-	```
-*/
-
-func (ts *Timestamps) MarkUpdated(t *time.Time, resetCreated func() bool) {
-	if t == nil {
-		t = util.Now()
+	for _, opt := range opts {
+		opt.Apply(ts)
 	}
-
-	if resetCreated == nil || resetCreated() {
-		ts.Created = nil
-	}
-
-	ts.Updated = t
-}
-
-func AndNilCreated() bool {
-	return true
 }
