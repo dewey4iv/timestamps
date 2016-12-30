@@ -6,9 +6,7 @@ type Option interface {
 }
 
 // Updated marks a timestamp set updated
-var Updated = func() Option {
-	return &update{}
-}
+var Updated *update
 
 type update struct{}
 
@@ -17,9 +15,7 @@ func (opt *update) Apply(t *Timestamps) {
 }
 
 // Created marks a timestamp as created
-var Created = func() Option {
-	return &created{}
-}
+var Created *created
 
 type created struct{}
 
