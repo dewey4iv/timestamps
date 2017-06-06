@@ -37,7 +37,7 @@ type updatedWithTime struct {
 }
 
 func (opt *updatedWithTime) Apply(t *Timestamps) {
-	t.Updated = &opt.updated
+	t.UpdatedAt = &opt.updated
 }
 
 // CreatedWithTime sets the timestamps as created with the provided time
@@ -50,6 +50,6 @@ type createdWithTime struct {
 }
 
 func (opt *createdWithTime) Apply(t *Timestamps) {
-	t.Created = &opt.created
-	t.Updated = &opt.created
+	t.CreatedAt = &opt.created
+	t.UpdatedAt = &opt.created
 }
