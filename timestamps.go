@@ -4,8 +4,8 @@ import "time"
 
 // Timestamps holds the created and updated fields of a timestamp
 type Timestamps struct {
-	Updated *time.Time `json:"updated" gorethink:"updated_at,omitempty"`
-	Created *time.Time `json:"created" gorethink:"created_at,omitempty"`
+	Updated *time.Time `json:"updated" gorethink:"updated,omitempty"`
+	Created *time.Time `json:"created" gorethink:"created,omitempty"`
 }
 
 // Mark takes a variadic list of Options and applies them to the timestamp
